@@ -1,6 +1,15 @@
-var connect = require("connect");
+var connect = require("connect"),
+    connectJade = require("connect-jade");
+
 
 connect()
-  .use(connect.logger())
-  .use(connect.static(__dirname + "/public"))
+  .use(connectJade({
+    root: __dirname + "/views",
+    defaults: {
+      title: "MyApp"
+    }
+  }))
+  .use(function( req, res) {
+    res.render("index", { heading: "Welcome to My App" });
+  })
   .listen(3000);
